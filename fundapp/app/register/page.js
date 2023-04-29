@@ -1,14 +1,12 @@
-import React from 'react'
-import Register from '../../components/Register'
-import Login from '../../components/Login'
+import React from "react";
+import Register from "../../components/Register";
 
- const RegisterPage = () => {
+const RegisterPage = () => {
   return (
-    <div>
-        <Register />
-        <Login />
+    <div className="flex flex-col justify-center items-center h-screen  bg-teal-800 overflow-hidden">
+      <Register />
     </div>
-  )
-}
+  );
+};
 
 export default RegisterPage;

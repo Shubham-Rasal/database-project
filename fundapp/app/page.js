@@ -13,10 +13,18 @@ export default async function Home() {
   const projects = await getProjects();
 
   return (
-    <main>
-      <div className="register bg-red-700">
+    <main className="container mx-auto">
+      <div className=" bg-gray-200 flex justify-start space-x-3 items-center">
         <Link href="/register">
-          <button>Register</button>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Register
+          </button>
+        </Link>
+
+        <Link href="/login">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Login
+          </button>
         </Link>
       </div>
 

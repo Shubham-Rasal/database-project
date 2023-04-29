@@ -1,6 +1,6 @@
 "use client";
-
-import { useState, useEffect, Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export const metadata = {
   title: "New Project",
@@ -8,12 +8,14 @@ export const metadata = {
 };
 
 const NewProjectPage = ({ userId }) => {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
   const [deadline, setDeadline] = useState(new Date());
-
+  
+  
   useEffect(() => {
     const getUser = async () => {
       // const res = await fetch(`https://api.github.com/users/${userId}`);
@@ -21,13 +23,14 @@ const NewProjectPage = ({ userId }) => {
       const newUser = await res.json();
       setUser(newUser);
     };
-
+    
     getUser();
   }, []);
-
+  
   async function handleSubmit(event) {
     event.preventDefault();
-    const project = { name, description, goal, deadline };
+    const userId = user.id;
+    const project = { name, description, goal, deadline , userId};
     const res = await fetch("http://localhost:3000/api/projects", {
       method: "POST",
       headers: {
@@ -37,8 +40,12 @@ const NewProjectPage = ({ userId }) => {
     });
 
     const text = await res.text();
-    
+
     console.log(text);
+
+    router.push("/");
+
+    
   }
 
   return (
@@ -47,14 +54,16 @@ const NewProjectPage = ({ userId }) => {
         New Project
       </h1>
 
-      <div className="bg-white shadow-md rounded-lg px-10 py-2 my-6">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            {!user ? (
-              <div className="bg-gray-300 w-8 h-8 rounded-full mr-4">
-                Loading...
-              </div>
-            ) : (
+      {!user ? (
+        <div className="bg-gray-300  animate-pulse shadow-md rounded-lg px-10 py-2 my-6">
+          <div className="flex justify-between items-center ">
+            <div className=" h-8 flex items-center"></div>
+          </div>
+        </div>
+      ) : (
+        <div className="bg-white shadow-md rounded-lg px-10 py-2 my-6">
+          <div className="flex justify-between items-center ">
+            <div className="flex items-center ">
               <>
                 <img
                   src={user.avatar_url}
@@ -63,10 +72,10 @@ const NewProjectPage = ({ userId }) => {
                 />
                 <h1 className="text-md font-bold">{user.name}</h1>
               </>
-            )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <form
         onSubmit={handleSubmit}

@@ -1,16 +1,21 @@
-show databases;
+-- show databases;
 
-use nextjs;
+-- use nextjs;
 
-show tables;
+-- show tables;
 
-create table User(
-    name varchar(255),
-    email varchar(255),
-    password varchar(255),
-    id int not null auto_increment,
-    account_balance int,
-    primary key(id)
-);
+-- create table User(
+--     name varchar(255),
+--     email varchar(255),
+--     password varchar(255),
+--     id int not null auto_increment,
+--     account_balance int,
+--     primary key(id)
+
+-- );
+
+alter table User add foreign key (id) references Project(created_by);
+
+
 
 desc User;

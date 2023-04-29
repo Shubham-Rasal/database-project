@@ -1,6 +1,7 @@
 "use client"
 import { useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import Button from './Button';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -23,9 +24,9 @@ export default function Checkout() {
   return (
     <form action="/api/checkout_sessions" method="POST">
       <section>
-        <button type="submit" role="link">
-          Checkout
-        </button>
+        <Button type="submit" role="link" color="blue">
+          Fund this project
+        </Button>
       </section>     
     </form>
   );

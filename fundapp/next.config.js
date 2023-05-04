@@ -2,6 +2,7 @@
 const nextConfig = {
   experimental: {
     appDir: true,
+    serverComponentsExternalPackages : ['bcrypt']
   },
   env: {
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
@@ -10,6 +11,16 @@ const nextConfig = {
   api : {
     bodyParser: true,
     externalResolver: true,
+  },
+
+  webpack5: true,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+      }
+    }
+    return config;
   },
 }
 

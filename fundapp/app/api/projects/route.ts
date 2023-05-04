@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
+import { convertTOMySQLTimeStamp } from "../../../lib/utils";
 
 type Project = {
   name: string;
@@ -11,18 +12,7 @@ type Project = {
   created_by?: number;
 };
 
-function convertTOMySQLTimeStamp(date: Date): string {
-  //'YYYY-MM-DD hh:mm:ss'
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
 
-  const dateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  return dateString;
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -31,7 +21,7 @@ export async function GET(request: NextRequest) {
       values: [],
     });   
 
-    console.log("projects", projects);
+    // console.log("projects", projects);
     return new Response(JSON.stringify(projects));
   } catch (error : any) {
     console.log("db error", error);

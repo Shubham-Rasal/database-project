@@ -44,5 +44,5 @@ export async function POST(request: NextRequest) {
     console.log("error", e);
   }
 
-  return new Response("Profile Created Successfully!");
+  return new NextResponse("Profile Created Successfully!");
 }

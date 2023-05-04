@@ -7,10 +7,10 @@ const Login = () => {
   const router = useRouter();
 
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    password2: "",
+    name: "Shubham",
+    email: "shubhamrasal0070112@gmail.com",
+    password: "3WY4miKcLjpsZGJ",
+    password2: "ets",
   });
 
   const { name, email, password, password2 } = user;
@@ -31,11 +31,35 @@ const Login = () => {
         body: JSON.stringify(user),
     });
 
-    const text = await res.text();
-    console.log(text);    
-    console.log("Login Submit");
-    //route to home page
-    router.push("/");
+    // if 401, then user does not exist
+    if (res.status === 404) {
+      console.log("User does not exist");
+      return;
+    }
+
+    // 401 incorrect password
+    if (res.status === 401) {
+      console.log("Incorrect password");
+      return;
+    }
+
+
+    // res status is 409 if user already exists
+    if (res.status === 409) {
+
+      console.log("User already exists");
+      return;
+    }
+
+
+
+
+    // const json = await res.json();
+    console.log(res);
+
+    router.push("/profile");
+
+
   };
 
   return (
@@ -60,7 +84,6 @@ const Login = () => {
             name="name"
             value={name}
             onChange={onChange}
-            required
           />
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -76,7 +99,6 @@ const Login = () => {
             name="email"
             value={email}
             onChange={onChange}
-            required
           />
 
           <label
@@ -110,7 +132,6 @@ const Login = () => {
             name="password2"
             value={password2}
             onChange={onChange}
-            required
           />
           <div className="flex items-center justify-between">
             <button

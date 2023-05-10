@@ -14,23 +14,23 @@ const NewProjectPage = ({ userId }) => {
   const [description, setDescription] = useState("");
   const [goal, setGoal] = useState("");
   const [deadline, setDeadline] = useState(new Date());
-  
-  
+
   useEffect(() => {
     const getUser = async () => {
       // const res = await fetch(`https://api.github.com/users/${userId}`);
-      const res = await fetch(`https://api.github.com/users/Shubham-Rasal`);
-      const newUser = await res.json();
-      setUser(newUser);
+      const res = await fetch(`http://localhost:3000/api/profile`);
+      const { user } = await res.json();
+      console.log(user);
+      setUser(user);
     };
-    
+
     getUser();
   }, []);
-  
+
   async function handleSubmit(event) {
     event.preventDefault();
     const userId = user.id;
-    const project = { name, description, goal, deadline , userId};
+    const project = { name, description, goal, deadline, userId };
     const res = await fetch("http://localhost:3000/api/projects", {
       method: "POST",
       headers: {
@@ -44,8 +44,6 @@ const NewProjectPage = ({ userId }) => {
     console.log(text);
 
     router.push("/");
-
-    
   }
 
   return (
@@ -64,14 +62,7 @@ const NewProjectPage = ({ userId }) => {
         <div className="bg-white shadow-md rounded-lg px-10 py-2 my-6">
           <div className="flex justify-between items-center ">
             <div className="flex items-center ">
-              <>
-                <img
-                  src={user.avatar_url}
-                  alt="avatar"
-                  className="w-8 h-8 rounded-full mr-4"
-                />
-                <h1 className="text-md font-bold">{user.name}</h1>
-              </>
+              <h1 className="text-md font-bold">{user.name}</h1>
             </div>
           </div>
         </div>

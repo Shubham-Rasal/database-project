@@ -12,12 +12,12 @@ type User = {
 export async function GET(request: NextRequest) {
 
     const jwt = request.cookies.get("jwt")?.value;
-    console.log("jwt", request.cookies.getAll());
+    // console.log("jwt", request.cookies.getAll());
     
     if(!jwt){
         return NextResponse.json({message: "You are not logged in" , error : true});
     }
-    console.log("came to user profile")
+    // console.log("came to user profile")
 
     const verified = await verify(jwt).catch((e) => {
         console.log("error", e);
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     }
 
     const { user_id } = verified;
-    console.log("user_id", user_id);
+    // console.log("user_id", user_id);
 
     //get user details
     const result = await executeQuery({

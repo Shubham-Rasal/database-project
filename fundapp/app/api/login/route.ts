@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "@/lib/db";
-import { sign } from "@/lib/auth";
+import { sign, verify } from "@/lib/auth";
 import bcrypt from "bcrypt";
+import { convertToUTCString } from "@/lib/utils";
 
-
-export const verifyPassword = async (password : string, hash : string) => {
-  return await bcrypt.compare(password, hash);
+export const verifyPassword = async (password : string, hash : string) : Promise<boolean> => {
+  const match = await bcrypt.compare(password, hash);
+  return match;
 };
 
 export async function POST(request: NextRequest) {
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
 
   const id = user.id;
 
-  const match = await verifyPassword(password, user.password);
+  const match : boolean  = await verifyPassword(password, user.password);
 
   if (!match) {
     return NextResponse.json({ message: "Invalid Password" }, { status: 401 });
@@ -42,12 +43,26 @@ export async function POST(request: NextRequest) {
 
   const jwt = await sign({ user_id: id });
   console.log("jwt", jwt);
+  const exp  = (await verify(jwt))?.exp;
+  if(!exp){
+    return NextResponse.json({ message: "Error in generating jwt" }, { status: 500 });
+  }
 
-  return NextResponse.redirect(new URL("/profile" , request.url), {
-    status: 302,
-    headers: {
-      "set-cookie": `jwt=${jwt}; path=/; HttpOnly`,
+  const response = NextResponse.json(
+    {
+      message: "Login Successful",
+      jwt: jwt,
+      exp : convertToUTCString(exp),
     },
-  });
+    {
+      status: 200,
+      headers: {
+        "set-cookie": `jwt=${jwt};  path=/; httponly;`,
+      },
+    }
+  );
+
+  return response;
+
 
 }

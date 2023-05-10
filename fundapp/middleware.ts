@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
     console.log("error in verifying ", e);
   });
 
-  console.log("verified", verified);  
+  // console.log("verified", verified);  
 
   
 

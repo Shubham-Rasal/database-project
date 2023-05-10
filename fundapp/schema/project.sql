@@ -11,6 +11,7 @@ show tables;
 
 -- alter table Project add column project_deadline date;
 -- alter table Project add column created_at timestamp default current_timestamp;
-alter table Project add column created_by int not null default 1;
+-- alter table Project add column created_by int not null;
+alter table Project add foreign key (created_by) references User(id);
 
 desc Project;

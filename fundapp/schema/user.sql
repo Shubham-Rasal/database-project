@@ -14,7 +14,7 @@
 
 -- );
 
-alter table User add foreign key (id) references Project(created_by);
+-- alter table User add foreign key (id) references Project(created_by);
 
 
 

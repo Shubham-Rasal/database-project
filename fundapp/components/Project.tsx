@@ -17,8 +17,7 @@ function humanDate(date: string) {
   return new Date(date).toLocaleDateString();
 }
 
-
-const ProjectItem = (project : Project) => {
+const ProjectItem = (project: Project) => {
   return (
     <div
       key={project.id}
@@ -36,9 +35,9 @@ const ProjectItem = (project : Project) => {
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <span className="font-bold text-gray-700 text-sm mr-2">
-            Created By : 
+            Created By :
             <Link href={`/users/${project.created_by}`}>
-            {project.created_by}
+              <button className="text-blue-500">{project.created_by}</button>
             </Link>
           </span>
         </div>

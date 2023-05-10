@@ -7,13 +7,12 @@ const Login = () => {
   const router = useRouter();
 
   const [user, setUser] = useState({
-    name: "Shubham",
-    email: "shubhamrasal0070112@gmail.com",
-    password: "3WY4miKcLjpsZGJ",
-    password2: "ets",
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
   });
 
-  const { name, email, password, password2 } = user;
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -49,6 +48,11 @@ const Login = () => {
       return;
     }
 
+    if (res.status === 500) {
+      console.log("Server error");
+      return;
+    }
+
     const json = await res.json();
     console.log(json);
 
@@ -76,7 +80,7 @@ const Login = () => {
             type="text"
             placeholder="Name"
             name="name"
-            value={name}
+            value={user.name}
             onChange={onChange}
           />
           <label
@@ -91,7 +95,7 @@ const Login = () => {
             type="email"
             placeholder="Email"
             name="email"
-            value={email}
+            value={user.email}
             onChange={onChange}
           />
 
@@ -107,7 +111,7 @@ const Login = () => {
             id="password"
             placeholder="Password"
             name="password"
-            value={password}
+            value={user.password}
             onChange={onChange}
             required
           />
@@ -124,7 +128,7 @@ const Login = () => {
             id="password2"
             placeholder="Confirm Password"
             name="password2"
-            value={password2}
+            value={user.password2}
             onChange={onChange}
           />
           <div className="flex items-center justify-between">

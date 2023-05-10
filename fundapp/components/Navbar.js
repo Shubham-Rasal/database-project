@@ -38,7 +38,7 @@ const Navbar = () => {
       setUser(user);
       console.log(user);
     });
-  } , []);
+  } , [pathname]);
 
   if (!user)
     return (

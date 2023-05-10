@@ -1,41 +1,52 @@
+"use client";
 import Link from "next/link";
+import Logout from "@/components/Logout";
+import ProjectItem from "@/components/ProjectItem";
+import { useEffect, useState } from "react";
 
 async function getProfile() {
-  const response = await fetch("https://api.github.com/users/Shubham-Rasal");
-  const data = await response.json();
-  return data;
-}
+  const res = await fetch("http://localhost:3000/api/profile", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
+  console.log(res);
+  if (!res.ok) {
+    throw new Error("Failed to fetch profile");
+  }
 
-async function getRepos() {
-  const response = await fetch(
-    "https://api.github.com/users/Shubham-Rasal/repos"
-  );
-  const data = await response.json();
-  return data;
-}
-
-async function getFollowers() {
-  const response = await fetch(
-    "https://api.github.com/users/Shubham-Rasal/followers"
-  );
-  const data = await response.json();
-  return data;
+  try {
+    const profile = await res.json();
+    console.log(profile);
+    return profile;
+  } catch (error) {
+    throw new Error("Failed to parse JSON response");
+  }
 }
 
 const ProfilePage = async () => {
-  const profile = getProfile();
-  const repos = getRepos();
-  const followers = getFollowers();
+  const [user, setUser] = useState({});
+  const [projects, setProjects] = useState([]);
 
-  const results = await Promise.all([profile, repos, followers]);
-  const [p, r, f] = results;
+  useEffect(() => {
+    getProfile().then((data) => {
+      console.log(data);
+      const { user, projects } = data;
+      console.log(user);
 
+      setUser(user);
+      setProjects(projects);
+    });
+    // if (!data) throw new Error("Failed to fetch profile");
+  }, []);
   return (
     <div>
       <h1>Profile Page</h1>
+      
       <div>
-        <img src={p.avatar_url} alt="Shubham Rasal" className="w-32" />
-        <h2 className="text-2xl font-bold">{p.name}</h2>
+        <h2 className="text-2xl font-bold">{user.name}</h2>
 
         <Link href="/projects/new">
           <button className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">
@@ -43,27 +54,19 @@ const ProfilePage = async () => {
           </button>
         </Link>
 
-        <h3 className="text-xl text-gray-600 font-bold">
-          Total Funders: {p.followers}
-        </h3>
+        <h3 className="text-xl text-gray-600 font-bold">Total Funders: 90</h3>
       </div>
       <div>
         <div>
           <h3 className="text-xl text-orange-600 font-bold">Funders</h3>
-          {f.map((follower) => (
-            <span key={follower.id} className="bg-teal-500  mx-3">
-              {follower.login}
-            </span>
-          ))}
         </div>
 
         <h3 className="text-xl text-orange-600 font-bold">Projects</h3>
-
-        <ul>
-          {r.map((repo) => (
-            <li key={repo.id}>{repo.name}</li>
+        <div className="flex flex-wrap">
+          {projects.map((project) => (
+            <ProjectItem key={project.id} {...project} />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

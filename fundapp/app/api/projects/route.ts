@@ -15,6 +15,19 @@ type Project = {
 
 
 export async function GET(request: NextRequest) {
+
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("userId");
+
+  if (userId !== null) {
+    const projects = await executeQuery({
+      query: `SELECT * FROM Project WHERE created_by = ?`,
+      values: [userId],
+    });
+
+    return new Response(JSON.stringify(projects));
+  }
+
   try {
     const projects = await executeQuery({
       query: `SELECT * FROM Project`,
@@ -22,7 +35,7 @@ export async function GET(request: NextRequest) {
     });   
 
     // console.log("projects", projects);
-    return new Response(JSON.stringify(projects));
+    return NextResponse.json(projects);
   } catch (error : any) {
     console.log("db error", error);
     return new Response(error, { status: 500 });

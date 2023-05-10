@@ -1,8 +1,7 @@
 import { Inter } from "next/font/google";
 import Link from "next/link";
-import Button from "../components/Button";
-import Project from "../components/Project";
-
+import Project from "@/components/Project";
+import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 async function getProjects() {
@@ -11,45 +10,34 @@ async function getProjects() {
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "no-cache",
+    cache: "no-store",
   });
 
   if (!res.ok) {
     throw new Error("Failed to fetch projects");
   }
 
-  const projects = await res.json();  
+  const projects = await res.json();
   // console.log(projects);
   return projects;
 }
 
+
+
+
 export default async function Home() {
   const projects = await getProjects();
-  // console.log("projects on client", projects);
-
-
-  if(!projects) throw new Error("Failed to fetch projects");
+  
+  
+  if (!projects) throw new Error("Failed to fetch projects");
 
   return (
     <main className="container w-screen">
-      <div className=" bg-gray-200 flex justify-start space-x-3 items-center">
-        <Link href="/register">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Register
-          </button>
-        </Link>
-
-        <Link href="/login">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Login
-          </button>
-        </Link>
-      </div>
-
+      {/* <Navbar /> */}
       <div className="create">
         <Link href="/projects/new">
-        <button className="bg-green-500 hover:bg-green-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Create Project
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Create Project
           </button>
         </Link>
       </div>
@@ -57,9 +45,9 @@ export default async function Home() {
       <div className="projects">
         <h1 className="text-3xl font-semibold">Projects</h1>
         <div className="flex  items-center h-auto flex-wrap w-screen">
-        {projects.map((project) => (
-        <Project key={project.id} {...project} />
-        ))}
+          {projects.map((project) => (
+            <Project key={project.id} {...project} />
+          ))}
         </div>
       </div>
     </main>

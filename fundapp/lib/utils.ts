@@ -15,3 +15,9 @@ export function convertFromMySQLTimeStamp(dateString: string): Date {
   const date = new Date(dateString);
   return date;
 }
+
+export function convertToUTCString(date: number): string {
+  const utcString = new Date(date).toUTCString();
+  console.log("utcString", utcString);
+  return utcString;
+}

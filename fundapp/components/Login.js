@@ -24,11 +24,11 @@ const Login = () => {
     console.log(user);
 
     const res = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
     });
 
     // if 401, then user does not exist
@@ -43,23 +43,17 @@ const Login = () => {
       return;
     }
 
-
     // res status is 409 if user already exists
     if (res.status === 409) {
-
       console.log("User already exists");
       return;
     }
 
-
-
-
-    // const json = await res.json();
-    console.log(res);
+    const json = await res.json();
+    console.log(json);
 
     router.push("/profile");
-
-
+  
   };
 
   return (

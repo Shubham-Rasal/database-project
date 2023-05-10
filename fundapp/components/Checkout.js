@@ -1,7 +1,7 @@
 "use client"
 import { useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import Button from './Button';
+import Button from './button';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.

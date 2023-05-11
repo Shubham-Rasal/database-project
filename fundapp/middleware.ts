@@ -8,24 +8,32 @@ export async function middleware(request: NextRequest) {
     console.log("error in verifying ", e);
   });
 
-  // console.log("verified", verified);  
-
-  
+  // console.log("verified", verified);
 
   if (!verified && request.nextUrl.pathname === "/profile") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
- 
-
   if (verified && request.nextUrl.pathname === "/login") {
     return NextResponse.redirect(new URL("/profile", request.url));
   }
 
+  const { pathname } = request.nextUrl;
+
+  //check if verified and path matchs to /project/{id}/fund
+  if (!verified && pathname.endsWith("/fund")) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   return NextResponse.next();
-  
 }
 
 export const config = {
-  matcher: ["/api/profile", "/profile", "/api/login", "/login"],
+  matcher: [
+    "/api/profile",
+    "/profile",
+    "/api/login",
+    "/login",
+    "/projects/:path*",
+  ],
 };

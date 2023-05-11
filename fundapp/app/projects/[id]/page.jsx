@@ -1,5 +1,4 @@
-import Checkout from "../../../components/Checkout";
-
+import FundButton from "../../../components/FundButton";
 async function getProject(id) {
   const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
     cache: "no-store",
@@ -15,6 +14,10 @@ async function getProject(id) {
 }
 
 function convertToDays(date) {
+
+  //check if utc date
+
+
   const now = new Date();
   const deadline = new Date(date);
   const diff = deadline.getTime() - now.getTime();
@@ -26,19 +29,7 @@ function convertToDays(date) {
 
 const ProjectPage = async ({ params }) => {
   const project = await getProject(params.id);
-
   console.log(project);
-
-  // {
-  //   name: 'test',
-  //   description: 'test',
-  //   funding_goal: 4500,
-  //   funding_raised: 0,
-  //   id: 1,
-  //   project_deadline: '2023-05-02T18:30:00.000Z',
-  //   created_at: '2023-04-29T10:43:31.000Z',
-  //   created_by: 1
-  // }
 
   return (
     <div className="bg-slate-800 text-gray-50 h-screen w-full p-14">
@@ -74,11 +65,7 @@ const ProjectPage = async ({ params }) => {
                 </h1>
               </div>
 
-              <div className="flex flex-col items-end justify-end  w-full h-full">
-                <button className=" h-1/2 w-full p-4 my-1 bg-green-700 text-green-100">
-                  Back this project
-                </button>
-              </div>
+              <FundButton {...project} />
             </div>
           </div>
         </div>

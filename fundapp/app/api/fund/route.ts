@@ -84,4 +84,7 @@ export async function POST(request: NextRequest) {
   });
 
   console.log("res", res);
+
+  return NextResponse.json({ message: "Funded successfully", error: false });
+
 }

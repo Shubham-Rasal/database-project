@@ -1,9 +1,10 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 const FundPage = () => {
   const [amount, setAmount] = useState("");
   const pathname = usePathname();
+  const router = useRouter();
   const project_id = pathname.split("/")[2];
 
   const handleAmountChange = (event) => {
@@ -27,10 +28,16 @@ const FundPage = () => {
       }),
     });
 
+    if (!res.ok) {
+      throw new Error("Something went wrong!", res.message);
+    }
+
     const data = await res.json();
     console.log(data);
 
-
+    // Redirect to the project page
+    router.refresh();
+    router.push(`/projects/${project_id}`);
   };
 
   return (

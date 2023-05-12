@@ -29,6 +29,18 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  if(!verified && pathname.endsWith("/admin")) {
+      return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if(verified && pathname.endsWith("/admin")) {
+    const { user_id } = verified;
+    console.log("user_id", user_id);
+    if(user_id !== 1) {
+      return NextResponse.redirect(new URL("/profile", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 
@@ -40,5 +52,7 @@ export const config = {
     "/login",
     "/projects/new",
     "/projects/:path*",
+    '/admin',
+    '/api/users',
   ],
 };

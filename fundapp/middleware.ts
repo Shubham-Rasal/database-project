@@ -25,6 +25,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
+  if(!verified && pathname.endsWith("/new")) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   return NextResponse.next();
 }
 
@@ -34,6 +38,7 @@ export const config = {
     "/profile",
     "/api/login",
     "/login",
+    "/projects/new",
     "/projects/:path*",
   ],
 };

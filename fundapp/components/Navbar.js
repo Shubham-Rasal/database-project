@@ -38,35 +38,31 @@ const Navbar = () => {
       setUser(user);
       console.log(user);
     });
-  } , [pathname]);
+  }, [pathname]);
 
   if (!user)
     return (
-      <h2>
-        <div className=" bg-gray-200 flex justify-start space-x-3 items-center">
-          <Link href="/register">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Register
-            </button>
-          </Link>
+      <div className=" bg-gray-200 flex justify-start space-x-3 items-center px-3">
+        <Link href="/register">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Register
+          </button>
+        </Link>
 
-          <Link href="/login">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Login
-            </button>
-          </Link>
-        </div>
-      </h2>
+        <Link href="/login">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Login
+          </button>
+        </Link>
+      </div>
     );
 
   return (
-    <div className=" bg-gray-200 flex justify-end space-x-3  pr-2 items-center">
-      { pathname === '/profile'  ? (
+    <div className=" bg-gray-200 flex justify-end space-x-3 h-fit pr-2 items-center">
+      {pathname === "/profile" ? (
         <>
           <Link href={`/`}>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Home
             </button>
           </Link>
@@ -74,9 +70,7 @@ const Navbar = () => {
         </>
       ) : (
         <Link href={`/profile`}>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Profile
           </button>
         </Link>

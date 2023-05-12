@@ -25,7 +25,7 @@ const Logout = ({ user , setUser }) => {
   return (
     <button
       onClick={logout}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
     >
       Logout {user.name}
     </button>

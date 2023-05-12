@@ -2,7 +2,8 @@
 import Link from "next/link";
 import Logout from "@/components/Logout";
 import ProjectItem from "@/components/ProjectItem";
-import { useEffect, useState } from "react";
+import * as React from "react";
+// import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 async function getProfile() {
   const res = await fetch("http://localhost:3000/api/profile", {
@@ -27,10 +28,10 @@ async function getProfile() {
 }
 
 const ProfilePage = async () => {
-  const [user, setUser] = useState({});
-  const [projects, setProjects] = useState([]);
+  const [user, setUser] = React.useState({});
+  const [projects, setProjects] = React.useState([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     getProfile().then((data) => {
       console.log(data);
       const { user, projects } = data;
@@ -41,35 +42,52 @@ const ProfilePage = async () => {
     });
     // if (!data) throw new Error("Failed to fetch profile");
   }, []);
-  return (
-    <div>
-      <h1>Profile Page</h1>
-      
-      <div>
-        <h2 className="text-2xl font-bold">{user.name}</h2>
 
-        <Link href="/projects/new">
-          <button className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded">
-            Create Project
-          </button>
-        </Link>
-
-        <h3 className="text-xl text-gray-600 font-bold">Total Funders: 90</h3>
+  if (!user) {
+    return (
+      <div className="flex flex-col  h-screen overflow-hidden  bg-slate-900 relative items-center">
+        <div className="card absolute w-3/4 rounded-md opacity-90 h-3/4 bg-white text-center p-12 m-10">
+          <div className="name">Loading...</div>
+        </div>
       </div>
-      <div>
-        <div>
-          <h3 className="text-xl text-orange-600 font-bold">Funders</h3>
-        </div>
+    );
+  }
 
-        <h3 className="text-xl text-orange-600 font-bold">Projects</h3>
-        <div className="flex flex-wrap">
-          {projects.map((project) => (
-            <ProjectItem key={project.id} {...project} />
-          ))}
-        </div>
+  return (
+    <div className="flex flex-col  h-screen overflow-hidden  bg-slate-900 relative items-center">
+      <div className="w-full bg-teal-400 h-1/2">s</div>
+      <div className="card absolute w-3/4 rounded-md opacity-90 h-3/4 bg-white text-center p-12 m-10">
+        <div className="name">{user.name}</div>
+
+        <ScrollAreaDemo />
       </div>
     </div>
   );
 };
 
 export default ProfilePage;
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+
+const tags = Array.from({ length: 50 }).map(
+  (_, i, a) => `v1.2.0-beta.${a.length - i}`
+);
+
+export function ScrollAreaDemo() {
+  return (
+    <ScrollArea className="h-72 w-48 rounded-md border">
+      <div className="p-4">
+        <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+        {tags.map((tag) => (
+          <React.Fragment>
+            <div className="text-sm" key={tag}>
+              {tag}
+            </div>
+            <Separator className="my-2" />
+          </React.Fragment>
+        ))}
+      </div>
+    </ScrollArea>
+  );
+}

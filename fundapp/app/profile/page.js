@@ -1,10 +1,8 @@
 "use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import Logout from "@/components/Logout";
 import ProjectItem from "@/components/ProjectItem";
-import * as React from "react";
-// import { ScrollArea } from "@radix-ui/react-scroll-area";
-
+import ScrollAreaDemo from "@/components/ScrollAreaDemo";
 async function getProfile() {
   const res = await fetch("http://localhost:3000/api/profile", {
     method: "GET",
@@ -27,11 +25,11 @@ async function getProfile() {
   }
 }
 
-const ProfilePage = async () => {
-  const [user, setUser] = React.useState({});
-  const [projects, setProjects] = React.useState([]);
+const ProfilePage = () => {
+  const [user, setUser] = useState({});
+  const [projects, setProjects] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getProfile().then((data) => {
       console.log(data);
       const { user, projects } = data;
@@ -40,7 +38,6 @@ const ProfilePage = async () => {
       setUser(user);
       setProjects(projects);
     });
-    // if (!data) throw new Error("Failed to fetch profile");
   }, []);
 
   if (!user) {
@@ -55,39 +52,29 @@ const ProfilePage = async () => {
 
   return (
     <div className="flex flex-col  h-screen overflow-hidden  bg-slate-900 relative items-center">
-      <div className="w-full bg-teal-400 h-1/2">s</div>
       <div className="card absolute w-3/4 rounded-md opacity-90 h-3/4 bg-white text-center p-12 m-10">
-        <div className="name">{user.name}</div>
+        <div className="name text-xl font-bold m-2">{user.name}</div>
 
-        <ScrollAreaDemo />
+        <div className="flex">
+          <ScrollAreaDemo projects={projects} />
+          <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col  w-96 h-full">
+              <div className="text-md font-semibold">
+                Account Balance : {user.account_balance}
+              </div>
+              <div className="create">
+                <Link href="/projects/new">
+                  <button className="bg-green-500 hover:bg-green-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Create Project
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ProfilePage;
-
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-);
-
-export function ScrollAreaDemo() {
-  return (
-    <ScrollArea className="h-72 w-48 rounded-md border">
-      <div className="p-4">
-        <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
-        {tags.map((tag) => (
-          <React.Fragment>
-            <div className="text-sm" key={tag}>
-              {tag}
-            </div>
-            <Separator className="my-2" />
-          </React.Fragment>
-        ))}
-      </div>
-    </ScrollArea>
-  );
-}

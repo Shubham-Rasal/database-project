@@ -1,9 +1,9 @@
 import { convertToDays } from "@/lib/utils";
 import FundButton from "../../../components/FundButton";
+import { useRouter } from "next/navigation";
 async function getProject(id) {
   const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
-    cache: "no-store",
-    next: { revalidate: 1 },
+    next: { revalidate: 0 },
   });
 
   if (res.status === 404) {
@@ -28,7 +28,7 @@ const ProjectPage = async ({ params }) => {
             {project.name}
           </h1>
           <div className="main flex w-full h-full ">
-            <div className="flex w-1/2 h-full text-2xl bg-green-100 text-slate-900 justify-center  text-center">
+            <div className="flex w-1/2 h-full  bg-green-100 text-slate-900 justify-center  text-center">
               {project.description}
             </div>
             <div className="flex flex-col w-1/2 px-8 bg-green-100 h-full">
@@ -53,13 +53,15 @@ const ProjectPage = async ({ params }) => {
                 <>
                   <div className="days-to-go h-1/2 text-slate-500 text-2xl">
                     <h1 className="text-medium flex items-center justify-center w-full  text-center text-slate-500 p-4">
-                      {convertToDays(project.project_deadline) == 0
+                      {convertToDays(project.project_deadline) <= 0
                         ? "Project Expired"
                         : convertToDays(project.project_deadline) +
                           " days to go"}
                     </h1>
                   </div>
-                  <FundButton {...project} />
+                  {convertToDays(project.project_deadline) > 0 ? (
+                    <FundButton {...project} />
+                  ) : null}
                 </>
               )}
             </div>

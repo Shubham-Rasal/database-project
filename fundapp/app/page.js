@@ -34,13 +34,7 @@ export default async function Home() {
   return (
     <main className="container w-screen">
       {/* <Navbar /> */}
-      <div className="create">
-        <Link href="/projects/new">
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            Create Project
-          </button>
-        </Link>
-      </div>
+     
 
       <div className="projects">
         <h1 className="text-3xl font-semibold">Projects</h1>

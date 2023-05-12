@@ -42,7 +42,12 @@ const Navbar = () => {
 
   if (!user)
     return (
-      <div className=" bg-gray-200 flex justify-start space-x-3 items-center px-3">
+      <div className=" bg-gray-200 flex justify-end space-x-3 items-center px-3">
+        <Link href="/">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Home
+          </button>
+        </Link>
         <Link href="/register">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Register
@@ -59,7 +64,7 @@ const Navbar = () => {
 
   return (
     <div className=" bg-gray-200 flex justify-end space-x-3 h-fit pr-2 items-center">
-      {pathname === "/profile" ? (
+      {pathname !== "/" ? (
         <>
           <Link href={`/`}>
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-4 rounded focus:outline-none focus:shadow-outline">

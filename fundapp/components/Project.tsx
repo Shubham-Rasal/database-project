@@ -44,7 +44,9 @@ const ProjectItem = (project: Project) => {
       </div>
 
       <Link href={`/projects/${project.id}`}>
-        <Button color="teal">View Project</Button>
+        <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">
+          View Project
+        </button>
       </Link>
     </div>
   );

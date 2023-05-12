@@ -56,7 +56,7 @@ const Login = () => {
     const json = await res.json();
     console.log(json);
 
-    router.push("/profile");
+    window.location.href = "/profile";
   
   };
 

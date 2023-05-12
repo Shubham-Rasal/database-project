@@ -71,11 +71,7 @@ export async function POST(request: NextRequest) {
     funded_on: convertTOMySQLTimeStamp(new Date()),
   };
 
-  console.log("fund", fund);
-  //   INSERT INTO funding (project_id, funder_id, amount, funded_on)
-  // VALUES (:project_id, :funder_id, :amount, :funded_on)
-  // ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount);
-
+  console.log("fund", fund);  
   const res = await executeQuery({
     query: `INSERT INTO funding (project_id, funder_id, amount, funded_on)
     VALUES (?, ?, ?, ?)

@@ -1,24 +1,43 @@
-import { NextRequest , NextResponse } from "next/server";
+import executeQuery from "@/lib/db";
+import { convertTOMySQLTimeStamp } from "@/lib/utils";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request : NextRequest) {
+type FundBody = {
+  projectId: number;
+  amount: number;
+  funder_id?: number;
+  funded_on?: string;
+};
 
-  console.log("request", request.headers.get("origin"));
+export async function POST(request: NextRequest) {
+  console.log("url", request.nextUrl);
   const origin = request.headers.get("origin");
-  const stripe = require("stripe").Stripe(
-    process.env.STRIPE_SECRET_KEY,
-    {
-      apiVersion: "2020-08-27",
-    }
-  );
 
-  // const stripe = new stripe.Stripe(
-  //   process.env.STRIPE_SECRET_KEY,
-  //   {
-  //     apiVersion: "2020-08-27",
-  //   }
-  // );
+  const body = await request.json();
+  const { project_id, user_id } = body;
+  console.log("project_id", project_id);
 
-  // console.log("stripe", stripe);
+  const fund: FundBody = {
+    projectId: project_id,
+    amount: 10,
+    funder_id: user_id,
+    funded_on: convertTOMySQLTimeStamp(new Date()),
+  };
+
+  console.log("fund", fund);
+  const res = await executeQuery({
+    query: `INSERT INTO funding (project_id, funder_id, amount, funded_on)
+    VALUES (?, ?, ?, ?)
+    ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount) , funded_on = GREATEST(funded_on, VALUES(funded_on));`,
+    values: [fund.projectId, fund.funder_id, fund.amount, fund.funded_on],
+  });
+
+  console.log("res", res);
+
+  const stripe = require("stripe").Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2020-08-27",
+  });
+
   console.log("secret key", process.env.STRIPE_SECRET_KEY);
 
   // return new Response('Hello, Next.js!')
@@ -27,10 +46,10 @@ export async function POST(request : NextRequest) {
     const session = await stripe.checkout.sessions.create({
       customer_email: "customer@example.com",
       submit_type: "donate",
-      
+
       billing_address_collection: "auto",
       shipping_address_collection: {
-        allowed_countries: ["US", "CA" , "IN"],
+        allowed_countries: ["US", "CA", "IN"],
       },
       line_items: [
         {
@@ -40,14 +59,14 @@ export async function POST(request : NextRequest) {
         },
       ],
       mode: "payment",
-      success_url: `${origin}/?success=true`,
-      cancel_url: `${origin}/?canceled=true`,
+      success_url: `${origin}/projects/${project_id}/?success=true`,
+      cancel_url: `${origin}/projects/${project_id}/?canceled=true`,
     });
 
     console.log("session", session);
 
-    return NextResponse.redirect(new URL((session.url).toString()) , {status : 303});
-  } catch (err : any) {
+    return NextResponse.json({ url: session.url });
+  } catch (err: any) {
     console.log("err", err);
     return new Response(err.message);
   }

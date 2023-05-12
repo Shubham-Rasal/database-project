@@ -21,3 +21,18 @@ export async function GET(request: NextRequest) {
   // console.log("results", users);
   return new NextResponse(JSON.stringify(users));
 }
+
+
+export async function DELETE(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (id !== null) {
+    const user = await executeQuery({
+      query: `DELETE FROM User WHERE id = ?`,
+      values: [id],
+    });
+
+    return new NextResponse(JSON.stringify(user));
+  }
+}

@@ -44,7 +44,7 @@ const AdminDashboardPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: userId}),
+      body: JSON.stringify({ id: userId }),
     });
   };
 

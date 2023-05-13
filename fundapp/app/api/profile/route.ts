@@ -12,7 +12,8 @@ type User = {
 export async function GET(request: NextRequest) {
 
     const jwt = request.cookies.get("jwt")?.value;
-    // console.log("jwt", request.cookies.getAll());
+    console.log("jwt in profile : ", jwt);
+    
     
     if(!jwt){
         return NextResponse.json({message: "You are not logged in" , error : true});
@@ -50,5 +51,5 @@ export async function GET(request: NextRequest) {
     }
     
     // console.log("user", user , projects);
-    return NextResponse.json({user, projects});
+    return NextResponse.json({user, projects , error : false});
 }

@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
 
   if(verified && pathname.endsWith("/admin")) {
     const { user_id } = verified;
-    console.log("user_id", user_id);
+    // console.log("user_id", user_id);
     if(user_id !== 1) {
       return NextResponse.redirect(new URL("/profile", request.url));
     }

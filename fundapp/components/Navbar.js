@@ -1,44 +1,37 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Logout from "@/components/Logout";
 import { usePathname } from "next/navigation";
+import { GlobalContext } from "@/context/GlobalContext";
 
-async function getUser() {
-  const res = await fetch("http://localhost:3000/api/profile", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "no-store",
-  });
-  console.log(res);
-  if (!res.ok) {
-    throw new Error("Failed to fetch profile");
-  }
+// async function getUser() {
+//   const res = await fetch("http://localhost:3000/api/profile", {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     cache: "no-store",
+//   });
+//   console.log(res);
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch profile");
+//   }
 
-  try {
-    const profile = await res.json();
-    console.log(profile);
-    return profile;
-  } catch (error) {
-    throw new Error("Failed to parse JSON response");
-  }
-}
+//   try {
+//     const profile = await res.json();
+//     console.log(profile);
+//     return profile;
+//   } catch (error) {
+//     throw new Error("Failed to parse JSON response");
+//   }
+// }
 
 const Navbar = () => {
-  // const router = useRou
-  const [user, setUser] = useState({});
-  const pathname = usePathname();
-  console.log(pathname);
 
-  useEffect(() => {
-    console.log("useEffect");
-    getUser().then(({ user }) => {
-      setUser(user);
-      console.log(user);
-    });
-  }, [pathname]);
+  const { user, setUser , pathname} = useContext(GlobalContext);
+  console.log(user);
+  
 
   if (!user)
     return (

@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Link from "next/link";
-import ProjectItem from "@/components/ProjectItem";
 import ScrollAreaDemo from "@/components/ScrollAreaDemo";
+import { GlobalContext } from "@/context/GlobalContext";
 async function getProfile() {
   const res = await fetch("http://localhost:3000/api/profile", {
     method: "GET",
@@ -26,19 +26,7 @@ async function getProfile() {
 }
 
 const ProfilePage = () => {
-  const [user, setUser] = useState({});
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    getProfile().then((data) => {
-      console.log(data);
-      const { user, projects } = data;
-      console.log(user);
-
-      setUser(user);
-      setProjects(projects);
-    });
-  }, []);
+  const { user, projects } = useContext(GlobalContext); 
 
   if (!user) {
     return (

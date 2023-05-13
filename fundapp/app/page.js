@@ -18,7 +18,6 @@ async function getProjects() {
   }
 
   const projects = await res.json();
-  // console.log(projects);
   return projects;
 }
 

@@ -11,7 +11,7 @@ export default function ScrollAreaDemo({ projects }) {
       <div className="p-4">
         <h4 className="mb-4 text-sm font-medium leading-none">Projects</h4>
         {projects.map((project) => (
-          <React.Fragment>
+          <React.Fragment key={project.id}>
             <div className="text-sm" key={project.id}>
               <Link href={`/projects/${project.id}`}>{project.name}</Link>
             </div>

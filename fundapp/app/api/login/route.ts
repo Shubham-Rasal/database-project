@@ -21,7 +21,7 @@ async function getValidUser(res: any, password: string) {
       console.log("res[i].password", res[i].password);
       const match = await verifyPassword(password, res[i].password);
       if (match) {
-        console.log(res[i]);
+        // console.log(res[i]);
         return res[i];
       }
     }
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
 
   //check if some users password matches
   let user = await getValidUser(res, password);
-  console.log("user", user);
+  // console.log("user", user);
 
   const { id } = user;
 

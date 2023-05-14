@@ -21,7 +21,7 @@ const Logout = ({ user , setUser }) => {
     router.push("/");
   }
 
-  console.log("user on logout", user);
+  // console.log("user on logout", user);
   return (
     <button
       onClick={logout}

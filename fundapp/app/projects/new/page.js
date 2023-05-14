@@ -48,58 +48,42 @@ const NewProjectPage = ({ userId }) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold tracking-wide mt-6 mb-2">
+      <h1 className="text-3xl text-center font-semibold tracking-wide mt-6 mb-2">
         New Project
-      </h1>
-
-      {!user ? (
-        <div className="bg-gray-300  animate-pulse shadow-md rounded-lg px-10 py-2 my-6">
-          <div className="flex justify-between items-center ">
-            <div className=" h-8 flex items-center"></div>
-          </div>
-        </div>
-      ) : (
-        <div className="bg-white shadow-md rounded-lg px-10 py-2 my-6">
-          <div className="flex justify-between items-center ">
-            <div className="flex items-center ">
-              <h1 className="text-md font-bold">{user.name}</h1>
-            </div>
-          </div>
-        </div>
-      )}
+      </h1>     
 
       <form
         onSubmit={handleSubmit}
-        className="flex  flex-col justify-center items-center"
+        className="flex w-full h-screen bg-teal-700 flex-col p-8 items-center"
       >
         <input
           onChange={(e) => setName(e.target.value)}
           type="text"
           placeholder="Project Name"
-          className="border border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+          className="border w-1/2 text-center border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         />
         <textarea
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Project Description"
-          className="border border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+          className="border w-1/2 text-center border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         />
         <input
           onChange={(e) => setGoal(e.target.value)}
           type="number"
           min="0"
-          step="0.01"
-          max="1000000"
+          step="1"
+          max="10000000"
           placeholder="Project Goal"
-          className="border border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+          className="border w-1/2 text-center border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         />
         <input
           onChange={(e) => setDeadline(e.target.value)}
           type="date"
           placeholder="Project Deadline"
-          className="border border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+          className="border w-1/2 text-center border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         />
         <button
-          className="bg-purple-600 text-white font-bold py-2 px-4 rounded"
+          className="bg-slate-900 text-white font-bold py-2 px-4 rounded"
           type="submit"
         >
           Create Project

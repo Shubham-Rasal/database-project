@@ -15,7 +15,9 @@ create table User(
 );
 
 -- alter table User add foreign key (id) references Project(created_by);
+-- add on delete cascade on update cascade;
 
+alter table User 
 
 
 desc User;

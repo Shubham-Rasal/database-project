@@ -16,7 +16,6 @@ show tables;
 -- );
 
 -- desc funding;
-
 -- DELIMITER $$
 -- CREATE TRIGGER update_funding_raised
 -- AFTER INSERT OR UPDATE ON funding

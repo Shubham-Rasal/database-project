@@ -39,12 +39,11 @@ const AdminDashboardPage = () => {
     e.preventDefault();
     console.log("deactivate");
     console.log(userId);
-    const res = await fetch("http://localhost:3000/api/users", {
+    const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: userId }),
+      },     
     });
   };
 

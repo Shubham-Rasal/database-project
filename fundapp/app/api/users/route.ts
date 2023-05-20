@@ -1,4 +1,5 @@
 import executeQuery from "@/lib/db";
+import { INTERNALS } from "next/dist/server/web/spec-extension/request";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -22,20 +23,4 @@ export async function GET(request: NextRequest) {
   return new NextResponse(JSON.stringify(users));
 }
 
-export async function DELETE(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const body = await request.json();
-  console.log("body", body);
-  const { id } = body;
-  console.log("id", id);
-  if (id !== null) {
-    const user = await executeQuery({
-      query: `DELETE FROM User WHERE id = ?`,
-      values: [id],
-    });
 
-    console.log("results", user);
-
-    return new NextResponse(JSON.stringify(user));
-  }
-}

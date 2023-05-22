@@ -1,7 +1,6 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import Link from "next/link";
-import ScrollAreaDemo from "@/components/ScrollAreaDemo";
 import { GlobalContext } from "@/context/GlobalContext";
 function getFundingPercent(project) {
   //return as 90%
@@ -12,6 +11,23 @@ const ProfilePage = () => {
   const { user, projects, funded_projects, loading, funded_user } =
     useContext(GlobalContext);
   console.log(funded_user);
+
+
+  const sendReward = async (u) => {
+    const res = await fetch("/api/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: u,
+        creator: user.id,
+      }),
+    });
+
+    const data = await res.json();
+    console.log(data);
+  };
 
   if (!user || loading) {
     return (
@@ -55,7 +71,14 @@ const ProfilePage = () => {
                     <div className="text-md font-semibold mx-2">
                       {index + 1}.
                     </div>
-                    <div className="text-md font-semibold">{project.name}</div>
+                    <div className="text-md font-semibold flex-1">
+                      <Link
+                        href={`/projects/${project.id}`}
+                        className="text-blue-500"
+                      >
+                        {project.name}
+                      </Link>
+                    </div>
                     <div className="text-md font-semibold">
                       {getFundingPercent(project) > 100 ? (
                         <div className="text-green-500">(Already funded)</div>
@@ -122,10 +145,11 @@ const ProfilePage = () => {
                   <div className="text-md font-semibold flex-1">
                     {user.name}
                   </div>
-                  <div className="text-md font-md flex-1">
-                    {user.email}
-                  </div>
-                  <button className="bg-amber-500 hover:bg-amber-300 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                  <div className="text-md font-md flex-1">{user.email}</div>
+                  <button
+                    onClick={() => sendReward(user)}
+                    className="bg-amber-500 hover:bg-amber-300 text-white font-bold my-4 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  >
                     Reward
                   </button>
                 </div>

@@ -34,12 +34,9 @@ const FundPage = () => {
       throw new Error("Something went wrong!", res.message);
     }
 
-    const data = await res.json();
-    console.log(data);
-
-    
+    console.log(res);
     // Redirect to the project page
-    router.refresh();
+    // router.refresh();
     setLoading(false);
     router.push(`/projects/${project_id}`);
   };

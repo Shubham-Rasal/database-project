@@ -11,6 +11,8 @@
   "dependencies": {
     "@radix-ui/react-scroll-area": "^1.0.3",
     "@radix-ui/react-separator": "^1.0.2",
+    "@react-email/button": "0.0.8",
+    "@react-email/html": "0.0.4",
     "@stripe/stripe-js": "^1.52.1",
     "@tanstack/react-table": "^8.9.1",
     "@types/node": "18.16.1",
@@ -30,6 +32,7 @@
     "react": "18.2.0",
     "react-aria-components": "^1.0.0-alpha.3",
     "react-dom": "18.2.0",
+    "resend": "^0.14.0",
     "serverless-mysql": "^1.5.5",
     "stripe": "^12.3.0",
     "swr": "^2.1.5",

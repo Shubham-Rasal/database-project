@@ -68,6 +68,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (err: any) {
     console.log("err", err);
-    return new Response(err.message);
+    return NextResponse.json({ error: { message: err.message } });
   }
 }

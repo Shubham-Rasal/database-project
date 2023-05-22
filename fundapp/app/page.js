@@ -10,7 +10,7 @@ async function getProjects() {
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "no-store",
+    cache: "no-cache",
   });
 
   if (!res.ok) {
@@ -31,9 +31,7 @@ export default async function Home() {
   if (!projects) throw new Error("Failed to fetch projects");
 
   return (
-    <main className="container w-screen">
-      {/* <Navbar /> */}
-     
+    <main className="container w-screen">     
 
       <div className="projects">
         <h1 className="text-3xl font-semibold">Projects</h1>

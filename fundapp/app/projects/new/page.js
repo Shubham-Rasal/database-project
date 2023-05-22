@@ -65,6 +65,7 @@ const NewProjectPage = ({ userId }) => {
         <textarea
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Project Description"
+          maxLength="255"
           className="border w-1/2 text-center border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         />
         <input
@@ -72,7 +73,7 @@ const NewProjectPage = ({ userId }) => {
           type="number"
           min="0"
           step="1"
-          max="10000000"
+          max="100000"
           placeholder="Project Goal"
           className="border w-1/2 text-center border-gray-300 p-2 mb-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
         />

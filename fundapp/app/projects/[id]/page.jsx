@@ -1,22 +1,33 @@
 import { convertToDays } from "@/lib/utils";
 import FundButton from "../../../components/FundButton";
-import { useRouter } from "next/navigation";
 async function getProject(id) {
-  const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
-    next: { revalidate: 0 },
+  try {
+
+    const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
+      next: { revalidate: 0 },
   });
 
   if (res.status === 404) {
     return { notFound: true };
   }
-
+  console.log(res);
   const data = await res.json();
   return data;
+    }
+  catch (err) {
+    console.log("error fetching project");
+    return null;
+  }
 }
 
 const ProjectPage = async ({ params }) => {
+  console.log(params);
   const project = await getProject(params.id);
   console.log(project);
+
+  if (!project) {
+    return <div>Project not found</div>;
+  }
   //check if enough funds are raised
   const enoughFunds = project.funding_raised >= project.funding_goal;
 

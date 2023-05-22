@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import User from "../../components/User";
+import { useRouter } from "next/navigation";
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ async function fetchUsers() {
 
 const AdminDashboardPage = () => {
   const [users, setUsers] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const getUsers = async () => {
@@ -45,6 +47,8 @@ const AdminDashboardPage = () => {
         "Content-Type": "application/json",
       },     
     });
+
+    router.refresh();
   };
 
   return (

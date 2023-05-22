@@ -8,7 +8,7 @@ import { GlobalContext } from "@/context/GlobalContext";
 const Navbar = () => {
 
   const { user, setUser , pathname } = useContext(GlobalContext);
-  console.log(user);
+  // console.log(user);
   
 
   if (!user)

@@ -18,12 +18,12 @@ Second , run the mysql server and update the credentials in the .env file
 Third, run the migration script to create the tables in the database
 
 ```bash
+#copy absolute path till the schema/user.sql file
 
-npm run migrate
-# or
-yarn migrate
-# or
-pnpm migrate
+source /Users/username/Projects/nextjs-mysql/schema/user.sql
+source /Users/username/Projects/nextjs-mysql/schema/project.sql
+#and so on 
+
 ```
 
 

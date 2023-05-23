@@ -1,8 +1,10 @@
--- show databases;
+show databases;
 
--- use nextjs;
+create database nextjs;
 
--- show tables;
+use nextjs;
+
+show tables;
 
 create table User(
     name varchar(255),
@@ -14,10 +16,6 @@ create table User(
 
 );
 
--- alter table User add foreign key (id) references Project(created_by);
--- add on delete cascade on update cascade;
-
-alter table User 
 
 
 desc User;

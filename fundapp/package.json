@@ -1,12 +1,14 @@
 {
   "name": "fundapp",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate" : "node ./lib/migrations.js"
   },
   "dependencies": {
     "@radix-ui/react-scroll-area": "^1.0.3",

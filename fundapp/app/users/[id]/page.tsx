@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type User = {
   id: number;
   name: string;
@@ -14,10 +16,22 @@ const UserPage = async ({ params }: any) => {
   const user: User = await getUser(params.id);
 
   return (
-    <div className="flex items-center justify-between">
-      <h1 className="text-2xl font-semibold">{user.name}</h1>
-      <p className="text-xl">{user.email}</p>
-    </div>
+    <>
+      <h1 className="text-2xl font-bold">Profile</h1>
+      <div className="flex items-center justify-between p-2 m-10">
+        <div className="flex flex-col items-center justify-center mr-2 font-bold text-xl">
+          {user.name}
+        </div>
+        <div className="flex flex-col items-center justify-center mr-2 font-bold text-xl">
+          <Link 
+            href={`mailto:${user.email}`}
+            className="text-blue-500 hover:text-blue-800"
+          >
+            {user.email}
+          </Link>
+        </div>
+      </div>
+    </>
   );
 };
 

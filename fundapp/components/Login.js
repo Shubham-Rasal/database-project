@@ -60,11 +60,11 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen  bg-teal-800 overflow-hidden">
-      <h1 className="text-4xl text-white font-bold mb-4">Login</h1>
+    <div className="flex flex-col justify-center items-center h-screen  overflow-hidden">
+      <h1 className="text-4xl text-slate-700 font-bold mb-4">Login</h1>
       <form
         onSubmit={onSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-white shadow-xl rounded px-8 pt-6 pb-8 mb-4 border border-slate-300"
       >
         <div className="mb-4 ">
           <label

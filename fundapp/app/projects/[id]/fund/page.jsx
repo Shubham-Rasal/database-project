@@ -38,7 +38,7 @@ const FundPage = () => {
     // Redirect to the project page
     // router.refresh();
     setLoading(false);
-    router.push(`/projects/${project_id}`);
+    router.push(`/profile`);
   };
 
   if (loading)

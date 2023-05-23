@@ -6,10 +6,8 @@ import { usePathname } from "next/navigation";
 import { GlobalContext } from "@/context/GlobalContext";
 
 const Navbar = () => {
-
-  const { user, setUser , pathname } = useContext(GlobalContext);
+  const { user, setUser, pathname } = useContext(GlobalContext);
   // console.log(user);
-  
 
   if (!user)
     return (
@@ -51,6 +49,7 @@ const Navbar = () => {
           </button>
         </Link>
       )}
+      
     </div>
   );
 };

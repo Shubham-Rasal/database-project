@@ -2,19 +2,18 @@ import { convertToDays } from "@/lib/utils";
 import FundButton from "../../../components/FundButton";
 async function getProject(id) {
   try {
-
     const res = await fetch(`http://localhost:3000/api/projects/${id}`, {
       next: { revalidate: 0 },
-  });
+      cache: "no-store",
+    });
 
-  if (res.status === 404) {
-    return { notFound: true };
-  }
-  console.log(res);
-  const data = await res.json();
-  return data;
+    if (res.status === 404) {
+      return { notFound: true };
     }
-  catch (err) {
+    console.log(res);
+    const data = await res.json();
+    return data;
+  } catch (err) {
     console.log("error fetching project");
     return null;
   }
@@ -39,18 +38,29 @@ const ProjectPage = async ({ params }) => {
             {project.name}
           </h1>
           <div className="main flex w-full h-full ">
-            <div className="flex w-1/2 h-full  bg-green-100 text-slate-900 justify-center  text-center">
+            <div className="flex flex-col items-center  w-1/2 h-full  bg-green-100 text-slate-900 justify-between  text-center">
               {project.description}
+              <span className="text-slate-500 text-sm">
+                Created at : {Date(project.created_at)}
+              </span>
             </div>
+
             <div className="flex flex-col w-1/2 px-8 bg-green-100 h-full">
               <div className="flex items-center top-border h-2 w-full bg-green-700"></div>
 
               <div className="raised flex justify-start text-2xl font-bold text-center bg-slate-100 text-green-700 p-4">
                 <h1 className="text-2xl flex items-center justify-center w-full bg-green-700 font-bold text-center text-slate-50 p-4">
-                  ${project.funding_raised}
+                  {project.funding_raised.toLocaleString("en-IN", {
+                    style: "currency",
+                    currency: "INR",
+                  })}
                 </h1>
                 <h4 className="text-xl w-full font-bold text-center text-slate-500 p-4">
-                  pledged of ${project.funding_goal} goal
+                  pledged of{" "}
+                  {project.funding_goal.toLocaleString("en-IN", {
+                    style: "currency",
+                    currency: "INR",
+                  })}{" "}
                 </h4>
               </div>
 

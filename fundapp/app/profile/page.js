@@ -12,7 +12,6 @@ const ProfilePage = () => {
     useContext(GlobalContext);
   console.log(funded_user);
 
-
   const sendReward = async (u) => {
     const res = await fetch("/api/send", {
       method: "POST",
@@ -42,12 +41,23 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-col   bg-slate-100  relative items-center">
       <div className="card absolute w-11/12 mx-5 rounded-md opacity-90  bg-white shadow-2xl text-center p-12 m-10">
+        {user.id == 1 && (
+          <Link href={`/admin`}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-2 rounded focus:outline-none focus:shadow-outline">
+              Admin Panel
+            </button>
+          </Link>
+        )}
         <div className="name text-xl font-bold m-2">{user.name}</div>
 
         <div className="flex flex-col justify-center items-center">
           <div className="flex flex-col  w-96 h-full">
             <div className="text-md font-semibold">
-              Account Balance : {user.account_balance}
+              Account Balance :{" "}
+              {user.account_balance.toLocaleString("en-IN", {
+                style: "currency",
+                currency: "INR",
+              })}
             </div>
             <div className="create">
               <Link href="/projects/new">

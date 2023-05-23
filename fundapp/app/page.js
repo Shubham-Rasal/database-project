@@ -10,7 +10,9 @@ async function getProjects() {
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "no-cache",
+    next: {
+      revalidate: 0,
+    },
   });
 
   if (!res.ok) {
@@ -21,18 +23,13 @@ async function getProjects() {
   return projects;
 }
 
-
-
-
 export default async function Home() {
   const projects = await getProjects();
-  
-  
+
   if (!projects) throw new Error("Failed to fetch projects");
 
   return (
-    <main className="container w-screen">     
-
+    <main className="container w-screen">
       <div className="projects">
         <h1 className="text-3xl font-semibold">Projects</h1>
         <div className="flex  items-center h-auto flex-wrap w-screen">

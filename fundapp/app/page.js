@@ -30,6 +30,9 @@ export default async function Home() {
 
   return (
     <main className="container w-screen">
+      {/* <Navbar /> */}
+     
+
       <div className="projects">
         <h1 className="text-3xl font-semibold">Projects</h1>
         <div className="flex  items-center h-auto flex-wrap w-screen">
